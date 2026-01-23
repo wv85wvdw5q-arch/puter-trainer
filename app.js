@@ -9,7 +9,7 @@ function uid(){
   return Math.random().toString(16).slice(2) + "-" + Math.random().toString(16).slice(2);
 }
 
-// SM-2-ähnlich (vereinfacht):
+// SM-2-ähnlich (vereinfacht): Meine Frage
 // - richtig: Intervall wächst, Ease steigt leicht
 // - falsch: Intervall zurück auf 0.01 Tage (~15 min), Ease sinkt, Repetitions zurück
 function reviewUpdate(card, correct){
@@ -73,7 +73,10 @@ function saveState(){
 }
 
 function getListById(id){ return state.lists.find(l => l.id === id); }
-function pairsByListId(listId){ return state.pairs.filter(p => p.listId === listId); }
+function pairsByListId(listId){
+  if(listId === "ALL") return state.pairs.slice();
+  return state.pairs.filter(p => p.listId === listId);
+}
 
 function ensureListOptions(){
   const selects = [
@@ -91,6 +94,13 @@ function ensureListOptions(){
   // Dropdowns neu füllen
   selects.forEach(sel => {
     sel.innerHTML = "";
+    // "Alle Kategorien" nur für Browse + Train sinnvoll
+    if(sel.id === "browseListSelect" || sel.id === "trainListSelect"){
+      const optAll = document.createElement("option");
+      optAll.value = "ALL";
+      optAll.textContent = "Alle Kategorien";
+      sel.appendChild(optAll);
+    }
     state.lists.forEach(l => {
       const opt = document.createElement("option");
       opt.value = l.id;
@@ -341,6 +351,7 @@ function pickNextCard(){
 
   document.getElementById("btnShowAnswer").disabled = false;
   document.getElementById("fcAnswerArea").classList.add("hidden");
+  document.querySelector(".flashcard")?.classList.remove("revealed");
 }
 
 function computeTrainStats(listId){
@@ -355,6 +366,7 @@ function computeTrainStats(listId){
 
 function showAnswer(){
   document.getElementById("fcAnswerArea").classList.remove("hidden");
+  document.querySelector(".flashcard")?.classList.add("revealed");
 }
 
 function markAnswer(correct){
