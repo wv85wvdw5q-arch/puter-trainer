@@ -194,7 +194,7 @@ function renderBrowse(){
         <div class="badge">Fällig: ${escapeHtml(dueStr)}</div>
         <div class="row">
           <button class="ghost" data-action="edit" data-id="${p.id}">Bearbeiten</button>
-          <button class="danger ghost" data-action="delete" data-id="${p.id}">Löschen</button>
+          <button class="danger" data-action="delete" data-id="${p.id}">Löschen</button>
         </div>
       </div>
       <div class="cols">
@@ -274,13 +274,6 @@ function handleAddPair(){
   addPair(listId, de, rm);
   document.getElementById("inputDe").value = "";
   document.getElementById("inputRm").value = "";
-  saveState();
-}
-
-function quickAddExamples(){
-  const listId = document.getElementById("addListSelect").value;
-  addPair(listId, "guten Tag", "bun di");
-  addPair(listId, "auf heute Abend", "a quista saira");
   saveState();
 }
 
@@ -495,7 +488,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
     document.getElementById("inputDe").value = "";
     document.getElementById("inputRm").value = "";
   });
-  document.getElementById("btnQuickAddExample").addEventListener("click", quickAddExamples);
 
   document.getElementById("btnNext").addEventListener("click", pickNextCard);
   document.getElementById("btnShowAnswer").addEventListener("click", showAnswer);
@@ -521,3 +513,10 @@ document.addEventListener("DOMContentLoaded", ()=>{
   // Start im Lernmodus: erste Karte laden, falls dort gelandet
   pickNextCard();
 });
+
+// PWA Offline: Service Worker registrieren
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js").catch(console.error);
+  });
+}
