@@ -9,7 +9,7 @@ function uid(){
   return Math.random().toString(16).slice(2) + "-" + Math.random().toString(16).slice(2);
 }
 
-// SM-2-ähnlich (vereinfacht): Meine Frage
+// SM-2-ähnlich (vereinfacht)
 // - richtig: Intervall wächst, Ease steigt leicht
 // - falsch: Intervall zurück auf 0.01 Tage (~15 min), Ease sinkt, Repetitions zurück
 function reviewUpdate(card, correct){
@@ -487,6 +487,33 @@ function escapeHtml(s){
 }
 
 // Wire up
+function isTrainTabVisible(){
+  return !document.getElementById("tab-train").classList.contains("hidden");
+}
+
+function enterTrainFullscreen(){
+  if(!isTrainTabVisible()) return;
+
+  document.body.classList.add("train-fullscreen");
+  document.getElementById("btnEnterFullscreen").classList.add("hidden");
+  document.getElementById("btnExitFullscreen").classList.remove("hidden");
+
+  const el = document.documentElement;
+  if (el.requestFullscreen) {
+    el.requestFullscreen().catch(()=>{});
+  }
+}
+
+function exitTrainFullscreen(){
+  document.body.classList.remove("train-fullscreen");
+  document.getElementById("btnEnterFullscreen").classList.remove("hidden");
+  document.getElementById("btnExitFullscreen").classList.add("hidden");
+
+  if (document.fullscreenElement && document.exitFullscreen) {
+    document.exitFullscreen().catch(()=>{});
+  }
+}
+
 document.addEventListener("DOMContentLoaded", ()=>{
   setupTabs();
 
@@ -502,6 +529,22 @@ document.addEventListener("DOMContentLoaded", ()=>{
   });
 
   document.getElementById("btnNext").addEventListener("click", pickNextCard);
+
+
+  document.getElementById("btnEnterFullscreen")
+    .addEventListener("click", enterTrainFullscreen);
+
+  document.getElementById("btnExitFullscreen")
+    .addEventListener("click", exitTrainFullscreen);
+
+  // ESC beendet Vollbild (Desktop)
+  document.addEventListener("keydown", (e)=>{
+    if(e.key === "Escape" && document.body.classList.contains("train-fullscreen")){
+      exitTrainFullscreen();
+    }
+  });
+
+
   document.getElementById("btnShowAnswer").addEventListener("click", showAnswer);
   document.getElementById("btnMarkWrong").addEventListener("click", ()=>markAnswer(false));
   document.getElementById("btnMarkRight").addEventListener("click", ()=>markAnswer(true));

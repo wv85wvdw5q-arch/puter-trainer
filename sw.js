@@ -1,10 +1,10 @@
-const CACHE_NAME = "puter-trainer-v1";
+const CACHE_NAME = "puter-trainer-v1.03";
 const ASSETS = [
   "./",
   "./index.html",
   "./style.css",
   "./app.js",
-  "./manifest.webmanifest",
+  "./manifest.webmanifest.json",
   "./icon-192.png",
   "./icon-512.png"
 ];

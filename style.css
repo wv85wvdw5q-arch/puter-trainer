@@ -95,6 +95,8 @@ button.ghost{background:transparent}
 .muted{color:var(--muted)}
 
 .flashcard{
+  position: relative;
+
   margin-top:14px;
   border:1px solid var(--line);
   border-radius:16px;
@@ -164,4 +166,154 @@ button.ghost{background:transparent}
 @keyframes reveal{
   from{ transform: scaleY(0.92); opacity: 0.0; }
   to{ transform: scaleY(1); opacity: 1; }
+}
+
+
+
+
+
+
+
+/* ===========================
+   Vollbild-Lernmodus (stabil)
+   =========================== */
+
+/* 1) Alles ausser TRAIN ausblenden */
+body.train-fullscreen .header,
+body.train-fullscreen .tabs {
+  display: none !important;
+}
+
+/* 2) Layout auf Vollbild ziehen */
+body.train-fullscreen .main {
+  padding: 0 !important;
+}
+
+/* Train-Panel und -Card füllen den Screen */
+body.train-fullscreen #tab-train {
+  max-width: none !important;
+  margin: 0 !important;
+}
+
+body.train-fullscreen #tab-train .card.grow {
+  height: 100vh;
+  margin: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  background: rgba(18,27,47,0.98);
+}
+
+/* 3) Controls/Meta im Train-Tab ausblenden (aber nicht die Karte) */
+body.train-fullscreen #tab-train h2,
+body.train-fullscreen #trainControls,
+body.train-fullscreen #trainStats,
+body.train-fullscreen #tab-train .fc-top,
+body.train-fullscreen #tab-train .hint {
+  display: none !important;
+}
+
+/* 4) Die Karte wird zur Vollbildfläche */
+body.train-fullscreen #tab-train .flashcard {
+  height: 100vh;
+  margin: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  background: rgba(13,22,48,0.95);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 28px;
+}
+
+/* 5) Prompt/Antwort riesig */
+body.train-fullscreen #tab-train .fc-prompt {
+  font-size: clamp(44px, 7vw, 84px);
+  line-height: 1.15;
+  text-align: center;
+  padding: 10px 0;
+}
+
+body.train-fullscreen #tab-train .fc-answer {
+  font-size: clamp(40px, 6vw, 72px);
+  line-height: 1.15;
+  text-align: center;
+  padding: 10px 0;
+  color: var(--accent);
+}
+
+/* 6) Buttons gross & gut bedienbar */
+body.train-fullscreen #tab-train #btnShowAnswer,
+body.train-fullscreen #tab-train #btnMarkWrong,
+body.train-fullscreen #tab-train #btnMarkRight {
+  font-size: 24px;
+  padding: 18px 26px;
+  border-radius: 16px;
+}
+
+/* 7) EXIT immer sichtbar (Button liegt jetzt in .flashcard) */
+body.train-fullscreen #btnExitFullscreen {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 9999;
+  font-size: 22px;
+  padding: 14px 18px;
+  border-radius: 16px;
+  background: rgba(13,22,48,0.75);
+  border: 1px solid var(--line);
+}
+
+/* ===========================
+   Vollbild: Karte als Overlay
+   =========================== */
+
+.flashcard.fullscreen{
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  margin: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  background: rgba(13,22,48,0.97);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 28px;
+}
+
+/* Prompt/Antwort riesig */
+.flashcard.fullscreen .fc-prompt{
+  font-size: clamp(44px, 7vw, 84px);
+  line-height: 1.15;
+  text-align: center;
+  padding: 10px 0;
+}
+.flashcard.fullscreen .fc-answer{
+  font-size: clamp(40px, 6vw, 72px);
+  line-height: 1.15;
+  text-align: center;
+  padding: 10px 0;
+  color: var(--accent);
+}
+
+/* Buttons gross */
+.flashcard.fullscreen #btnShowAnswer,
+.flashcard.fullscreen #btnMarkWrong,
+.flashcard.fullscreen #btnMarkRight{
+  font-size: 24px;
+  padding: 18px 26px;
+  border-radius: 16px;
+}
+
+/* Exit immer oben rechts */
+.flashcard.fullscreen #btnExitFullscreen{
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 10000;
+  font-size: 22px;
+  padding: 14px 18px;
+  border-radius: 16px;
+  background: rgba(13,22,48,0.75);
+  border: 1px solid var(--line);
 }

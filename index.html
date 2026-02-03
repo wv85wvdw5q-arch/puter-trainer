@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Puter Trainer - Test</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="manifest" href="manifest.webmanifest.json">
   <meta name="theme-color" content="#0b1220">
   <link rel="apple-touch-icon" href="icon-192.png">
 </head>
 <body>
   <header class="header">
-    <h1>Puter Trainer - V1.03, 23.01.2026 21:50</h1>
+    <h1>Puter Trainer - V1.04, 03.01.2026 12:12</h1>
     <div class="tabs">
         <button class="tab active" data-tab="categories">Kategorien</button>
         <button class="tab" data-tab="lists">Listen</button>
@@ -89,7 +89,7 @@
         <div class="card grow">
           <h2>Lernmodus</h2>
 
-          <div class="row wrap">
+          <div id="trainControls" class="row wrap">
             <label>Liste:
               <select id="trainListSelect"></select>
             </label>
@@ -110,11 +110,14 @@
             </label>
 
             <button id="btnNext">Nächste Karte</button>
+            <button id="btnEnterFullscreen" class="primary">Vollbild</button>
           </div>
 
           <div id="trainStats" class="stats"></div>
 
-          <div class="flashcard">
+          <div class="flashcard" id="flashcard">
+            <button id="btnExitFullscreen" class="ghost hidden" aria-label="Vollbild beenden">Beenden</button>
+
             <div class="fc-top">
               <span id="fcListName" class="badge"></span>
               <span id="fcMeta" class="muted"></span>
@@ -140,8 +143,7 @@
         </div>
       </div>
     </section>
-
-    <!-- SETTINGS / DATA -->
+<!-- SETTINGS / DATA -->
     <section class="panel hidden" id="tab-settings">
       <div class="card">
         <h2>Daten</h2>
