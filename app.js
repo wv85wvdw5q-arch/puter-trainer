@@ -1,6 +1,6 @@
 // Puter Trainer — lokale Daten, kein Server
 // V1.06 — SRS pro Lernrichtung + sofortiges Stats-Update
-// Puter Trainer - V1.06, 2026-02-18 10:16
+// Puter Trainer - V1.06, 2026-02-18 11:10 
 
 const STORAGE_KEY = "puter_trainer_v1";
 

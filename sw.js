@@ -1,4 +1,4 @@
-const CACHE_NAME = "Puter Trainer - V1.06, 2026-02-18 10:16";
+const CACHE_NAME = "Puter Trainer - V1.06, 2026-02-18 11:10";
 const ASSETS = [
   "./",
   "./index.html",
