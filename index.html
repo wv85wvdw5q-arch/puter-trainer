@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Puter Trainer - Test</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.webmanifest.json">
+  <meta name="theme-color" content="#0b1220">
+  <link rel="apple-touch-icon" href="icon-192.png">
+</head>
+<body>
+  <header class="header">
+    <h1>Puter Trainer - V1.06, 2026-02-18 10:16</h1>
+    <div class="tabs">
+        <button class="tab active" data-tab="categories">Kategorien</button>
+        <button class="tab" data-tab="lists">Listen</button>
+        <button class="tab" data-tab="add">Eingeben</button>
+        <button class="tab" data-tab="train">Lernen</button>
+        <button class="tab" data-tab="settings">Daten</button>
+    </div>
+  </header>
+
+  
+  <main class="main">
+    <!-- CATEGORIES -->
+    <section class="panel" id="tab-categories">
+    <div class="card">
+        <h2>Kategorien</h2>
+        <div class="row wrap">
+        <input id="newListName" placeholder='z.B. "Romanische Grussformen"' />
+        <button id="btnAddList">Kategorie hinzufügen</button>
+        </div>
+        <div id="listsContainer" class="list"></div>
+    </div>
+    </section>
+
+    <!-- LISTS -->
+    <section class="panel hidden" id="tab-lists">
+    <div class="card">
+        <h2>Einträge durchsuchen</h2>
+        <div class="row wrap">
+        <select id="browseListSelect"></select>
+        <select id="browseSort">
+            <option value="de">Sortiert nach Deutsch</option>
+            <option value="rm">Sortiert nach Puter</option>
+            <option value="created">Sortiert nach Erfassung</option>
+        </select>
+        <input id="browseSearch" placeholder="Suche (Deutsch oder Puter)..." />
+        </div>
+        <div id="browseContainer" class="pairs"></div>
+    </div>
+    </section>
+
+    <!-- ADD -->
+    <section class="panel hidden" id="tab-add">
+      <div class="card">
+        <h2>Wort-/Satzpaar erfassen</h2>
+        <div class="row wrap">
+          <label>Liste:
+            <select id="addListSelect"></select>
+          </label>
+        </div>
+
+        <div class="grid2">
+          <div>
+            <label>Deutsch</label>
+            <textarea id="inputDe" rows="3" placeholder="z.B. guten Tag"></textarea>
+          </div>
+          <div>
+            <label>Puter</label>
+            <textarea id="inputRm" rows="3" placeholder="z.B. bun di"></textarea>
+          </div>
+        </div>
+
+        <div class="row wrap">
+          <button id="btnAddPair">Speichern</button>
+          <button id="btnClearInputs" class="ghost">Felder leeren</button>
+        </div>
+
+        <p class="hint">
+          Tipp: Für Satzpaare einfach ganze Sätze eintragen. Du kannst später nach Deutsch oder Puter sortieren und suchen.
+        </p>
+      </div>
+    </section>
+
+    <!-- TRAIN -->
+    <section class="panel hidden" id="tab-train">
+      <div class="row">
+        <div class="card grow">
+          <h2>Lernmodus</h2>
+
+          <div id="trainControls" class="row wrap">
+            <label>Liste:
+              <select id="trainListSelect"></select>
+            </label>
+
+            <label>Richtung:
+              <select id="trainDirection">
+                <option value="de2rm">Deutsch → Puter</option>
+                <option value="rm2de">Puter → Deutsch</option>
+              </select>
+            </label>
+
+            <label>Auswahl:
+              <select id="trainMode">
+                <option value="due">Nur fällige (empfohlen)</option>
+                <option value="dueAndRecentWrong">Fällige + kürzlich falsch</option>
+                <option value="all">Alle Karten</option>
+              </select>
+            </label>
+
+            <button id="btnNext">Nächste Karte</button>
+            <button id="btnEnterFullscreen" class="primary">Vollbild</button>
+          </div>
+
+          <div id="trainStats" class="stats"></div>
+
+          <div class="flashcard" id="flashcard">
+            <button id="btnExitFullscreen" class="ghost hidden" aria-label="Vollbild beenden">Beenden</button>
+
+            <div class="fc-top">
+              <span id="fcListName" class="badge"></span>
+              <span id="fcMeta" class="muted"></span>
+            </div>
+
+            <div id="fcPrompt" class="fc-prompt"></div>
+
+            <button id="btnShowAnswer" class="primary">Antwort anzeigen</button>
+
+            <div id="fcAnswerArea" class="hidden">
+              <div id="fcAnswer" class="fc-answer"></div>
+
+              <div class="row wrap">
+                <button id="btnMarkWrong" class="danger">Falsch</button>
+                <button id="btnMarkRight" class="success">Richtig</button>
+              </div>
+
+              <p class="hint small">
+                “Richtig” verlängert das Intervall, “Falsch” setzt es zurück (spaced repetition).
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+<!-- SETTINGS / DATA -->
+    <section class="panel hidden" id="tab-settings">
+      <div class="card">
+        <h2>Daten</h2>
+        <div class="row wrap">
+          <button id="btnExport">Export (JSON)</button>
+          <button id="btnImport" class="ghost">Import (JSON)</button>
+          <input type="file" id="importFile" accept="application/json" class="hidden" />
+          <button id="btnReset" class="danger ghost">Alles löschen</button>
+        </div>
+        <p class="hint">
+          Export/Import ist praktisch, um deine Puter-Listen zu sichern oder zwischen Geräten zu übertragen.
+        </p>
+        <pre id="dataPreview" class="pre"></pre>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
